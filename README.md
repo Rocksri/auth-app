@@ -14,93 +14,139 @@
 
 # Postman Documentation:
 
-Authentication API Documentation
-1. Register User
-URL: POST {{base_url}}/api/auth/register
+# Authentication API Documentation
 
-Headers:
+This document describes the API endpoints for user authentication.
+
+## Base URL
+
+`{{base_url}}`
+
+## 1. Register User
+
+Registers a new user.
+
+**URL:** \`POST {{base\_url}}/api/auth/register\`
+
+**Headers:**
+
+
+
+\`\`\`
 
 Content-Type: application/json
 
-Request Body:
+\`\`\`
 
-json
+**Request Body:**
+
+\`\`\`json
 {
   "username": "testuser",
   "email": "test@example.com",
   "password": "password123"
 }
-Success Response (201 Created):
 
-json
-{
-  "message": "User registered successfully"
-}
-Error Responses:
+\`\`\`
 
-409 Conflict (Duplicate user):
+**Responses:**
 
-json
-{
-  "message": "User already exists"
-}
-400 Bad Request (Validation error):
+* **201 Created:** User registered successfully.
 
-json
-{
-  "message": "Validation failed",
-  "errors": ["email must be valid", "password must be at least 6 characters"]
-}
-2. User Login
-URL: POST {{base_url}}/api/auth/login
+    \`\`\`
+    {
+      "message": "User registered successfully"
+    }
 
-Headers:
+    \`\`\`
 
+* **409 Conflict:** User already exists.
+
+    \`\`\`
+    {
+      "message": "User already exists"
+    }
+
+    \`\`\`
+
+* **400 Bad Request:** Validation error.
+
+    \`\`\`
+    {
+      "message": "Validation failed",
+      "errors": ["email must be valid", "password must be at least 6 characters"]
+    }
+
+    \`\`\`
+
+## 2. User Login
+
+Authenticates a user and returns a JWT token.
+
+**URL:** \`POST {{base\_url}}/api/auth/login\`
+
+**Headers:**
+
+\`\`\`
 Content-Type: application/json
+\`\`\`
 
-Request Body:
+**Request Body:**
 
-json
+\`\`\`
 {
   "email": "test@example.com",
   "password": "password123"
 }
-Success Response (200 OK):
+\`\`\`
 
-json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-}
-Error Responses:
+**Responses:**
 
-401 Unauthorized:
+* **200 OK:** Successful login.
 
-json
-{
-  "message": "Invalid credentials"
-}
-3. Get Current User (Protected)
-URL: GET {{base_url}}/api/users/me
+    \`\`\`
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+    \`\`\`
 
-Headers:
+* **401 Unauthorized:** Invalid credentials.
 
+    \`\`\`
+    {
+      "message": "Invalid credentials"
+    }
+    \`\`\`
+
+## 3. Get Current User (Protected)
+
+Retrieves the authenticated user's information.  Requires a valid JWT token in the `Authorization` header.
+
+**URL:** \`GET {{base\_url}}/api/users/me\`
+
+**Headers:**
+
+\`\`\`
 Authorization: Bearer <JWT_TOKEN>
-
 Content-Type: application/json
+\`\`\`
 
-Success Response (200 OK):
+**Responses:**
 
-json
-{
-  "id": "64c3a5b7e8b1b2a3d4f5g6h7",
-  "username": "testuser",
-  "email": "test@example.com"
-}
-Error Responses:
+* **200 OK:** Successful retrieval.
 
-401 Unauthorized:
+    \`\`\`
+    {
+      "id": "64c3a5b7e8b1b2a3d4f5g6h7",
+      "username": "testuser",
+      "email": "test@example.com"
+    }
+    \`\`\`
 
-json
-{
-  "message": "Authentication invalid"
-}
+* **401 Unauthorized:** Authentication invalid.
+
+    \`\`\`
+    {
+      "message": "Authentication invalid"
+    }
+    \`\`\`
