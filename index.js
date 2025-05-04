@@ -20,3 +20,20 @@ app.use('/api/users', userRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+
+app.get('/', (req, res) => {
+    res.json({
+        message: 'Welcome to the Authentication API',
+        endpoints: {
+            register: 'POST /api/auth/register',
+            login: 'POST /api/auth/login',
+            profile: 'GET /api/users/me (requires Bearer token)'
+        },
+        instructions: {
+            register: 'Send { username, email, password } to /register',
+            login: 'Send { email, password } to /login to get JWT token',
+            profile: 'Include Authorization header with "Bearer <token>" to access profile'
+        }
+    });
+});
